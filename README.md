@@ -1,7 +1,7 @@
 # react-native-splash-screen
 
 
-[![Download](https://img.shields.io/badge/Download-v3.3.0-ff69b4.svg) ](https://www.npmjs.com/package/react-native-splash-screen)
+[![Download](https://img.shields.io/badge/Download-v4.0.0-ff69b4.svg) ](https://www.npmjs.com/package/react-native-splash-screen)
 [ ![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg)](https://github.com/crazycodeboy/react-native-splash-screen/pulls)
 [ ![react-native-splash-screen release](https://img.shields.io/github/release/crazycodeboy/react-native-splash-screen.svg?maxAge=2592000?style=flat-square)](https://github.com/crazycodeboy/GitHubPopular/releases)
 [ ![语言 中文](https://img.shields.io/badge/语言-中文-feb252.svg)](https://github.com/crazycodeboy/react-native-splash-screen/blob/master/README.zh.md)
@@ -13,6 +13,7 @@ A splash screen API for react-native which can programatically hide and show the
 
 ## Content
 
+- [v4 Quick Start (RN >= 0.84)](#v4-quick-start-rn--084)
 - [Changes](#changes)
 - [Installation](#installation)
 - [Examples](#examples)
@@ -22,9 +23,77 @@ A splash screen API for react-native which can programatically hide and show the
 - [Troubleshooting](#troubleshooting)
 - [Contribution](#contribution)
 
+## v4 Quick Start (RN >= 0.84)
+
+`4.x` is built for React Native New Architecture (TurboModule/Codegen) and supports `react-native >= 0.84.0`.
+
+### 1. Install
+
+```bash
+npm i react-native-splash-screen
+```
+
+> No `react-native link`, and no manual edits to `settings.gradle` / `MainApplication` are required.
+
+### 2. JS usage
+
+```ts
+import SplashScreen from 'react-native-splash-screen';
+
+SplashScreen.hide();
+```
+
+### 3. Android (Kotlin)
+
+Call before `super.onCreate` in `MainActivity.kt`:
+
+```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+  SplashScreen.show(this, true)
+  super.onCreate(savedInstanceState)
+}
+```
+
+Create `android/app/src/main/res/layout/launch_screen.xml`:
+
+```xml
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/launch_screen" />
+</RelativeLayout>
+```
+
+### 4. iOS (Swift)
+
+Add in `AppDelegate.swift`:
+
+```swift
+import react_native_splash_screen
+```
+
+Then call:
+
+```swift
+RNSplashScreen.show()
+```
+
+Use `LaunchScreen.storyboard` + Assets.xcassets for your static launch image.
+
+### 5. Android 12+ note
+
+Android 12+ always shows a system splash phase first (often with app icon). This is platform behavior.  
+This library controls your in-app custom splash show/hide behavior.
+
 
 ## Changes
-For React Native >= 0.47.0 use [v3.+](https://github.com/crazycodeboy/react-native-splash-screen/releases), for React Native < 0.47.0 use [v2.1.0](https://github.com/crazycodeboy/react-native-splash-screen/releases/tag/v1.0.9)
+- `v4.x`: React Native `>= 0.84.0` (New Architecture / TurboModule / Codegen)
+- `v3.x`: legacy architecture
 
 ## Examples  
 * [Examples](https://github.com/crazycodeboy/react-native-splash-screen/tree/master/examples)
@@ -35,6 +104,9 @@ For React Native >= 0.47.0 use [v3.+](https://github.com/crazycodeboy/react-nati
 
 
 ## Installation
+
+> The "automatic/manual installation" steps below are mainly for legacy React Native projects.  
+> For `react-native >= 0.84.0`, use the `v4 Quick Start` section above.
 
 ### First step(Download):
 Run `npm i react-native-splash-screen --save`

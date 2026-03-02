@@ -1,6 +1,6 @@
 # react-native-splash-screen
 
-[![Download](https://img.shields.io/badge/Download-v3.1.1-ff69b4.svg) ](https://www.npmjs.com/package/react-native-splash-screen)
+[![Download](https://img.shields.io/badge/Download-v4.0.0-ff69b4.svg) ](https://www.npmjs.com/package/react-native-splash-screen)
 [ ![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg)](https://github.com/crazycodeboy/react-native-splash-screen/pulls)
 [ ![react-native-splash-screen release](https://img.shields.io/github/release/crazycodeboy/react-native-splash-screen.svg?maxAge=2592000?style=flat-square)](https://github.com/crazycodeboy/GitHubPopular/releases)
 [ ![language English](https://img.shields.io/badge/language-English-feb252.svg)](https://github.com/crazycodeboy/GitHubPopular/)
@@ -13,12 +13,80 @@ React Native启动屏，解决iOS，Android启动白屏问题，支持Android和
 
 ## 目录
 
+- [v4 快速开始（RN >= 0.84）](#v4-快速开始rn--084)
 - [安装说明](#安装说明)
 - [演示](#演示)
 - [使用说明](#使用说明)
 - [API](#api)
 - [贡献](#贡献)
 - [改变](#改变)
+
+## v4 快速开始（RN >= 0.84）
+
+`4.x` 版本基于 React Native New Architecture（TurboModule/Codegen），并且只支持 `react-native >= 0.84.0`。
+
+### 1. 安装
+
+```bash
+npm i react-native-splash-screen
+```
+
+> 不再需要 `react-native link`，也不需要手动改 `settings.gradle`、`MainApplication`。
+
+### 2. JS 调用
+
+```ts
+import SplashScreen from 'react-native-splash-screen';
+
+SplashScreen.hide();
+```
+
+### 3. Android（Kotlin）
+
+在 `MainActivity.kt` 的 `onCreate` 里，`super.onCreate` 前调用：
+
+```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+  SplashScreen.show(this, true)
+  super.onCreate(savedInstanceState)
+}
+```
+
+启动页布局文件：`android/app/src/main/res/layout/launch_screen.xml`，例如：
+
+```xml
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/launch_screen" />
+</RelativeLayout>
+```
+
+### 4. iOS（Swift）
+
+在 `AppDelegate.swift` 里添加：
+
+```swift
+import react_native_splash_screen
+```
+
+并在 React Native 启动后调用：
+
+```swift
+RNSplashScreen.show()
+```
+
+`LaunchScreen.storyboard` 使用 Assets.xcassets 里的静态图资源。
+
+### 5. Android 12+ 说明
+
+Android 12 及以上会先显示系统级启动阶段（常见为应用图标），这是系统行为；  
+本库负责应用内可控的自定义启动页显示/隐藏。
 
 ## 演示
 * [Examples](https://github.com/crazycodeboy/react-native-splash-screen/tree/master/examples)
@@ -29,10 +97,13 @@ React Native启动屏，解决iOS，Android启动白屏问题，支持Android和
 
 ## 改变
 
-如果你项目的React Native>=0.47.请使用[v3.+](https://github.com/crazycodeboy/react-native-splash-screen/releases),
-如果<0.47.0请使用[v2.1.0](https://github.com/crazycodeboy/react-native-splash-screen/releases/tag/v1.0.9)。
+- `v4.x`：支持 React Native `>= 0.84.0`（New Architecture / TurboModule / Codegen）。
+- `v3.x`：历史版本（旧架构）。
 
 ## 安装说明
+
+> 以下“自动安装/手动安装”步骤主要针对旧版本 React Native。  
+> 如果你使用 `react-native >= 0.84.0`，请优先使用上面的「v4 快速开始」。
 
 ### 第一步(下载):
 在项目根目录打开终端运行 `npm i react-native-splash-screen --save`
