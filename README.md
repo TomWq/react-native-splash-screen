@@ -5,12 +5,16 @@
 
 A splash screen library for React Native. It lets you show/hide a custom splash view during app initialization on Android and iOS.
 
+> This is the upgraded `v4` line of `react-native-splash-screen`, and it only supports React Native New Architecture.
+
 ## Compatibility
 
 - `react-native-splash-screen@4.x`
   - React Native `>= 0.84.0`
   - New Architecture (TurboModule / Codegen)
-- Use `v3.x` for legacy architecture projects
+- Use `v3.x` for legacy architecture projects: [README-v3.md](./README-v3.md)
+
+`v4.x` does not support Legacy Architecture.
 
 ## Installation
 
@@ -100,6 +104,58 @@ Call after React Native startup:
 RNSplashScreen.show()
 ```
 
+Example (`AppDelegate.swift`, RN 0.84 template):
+
+```swift
+import UIKit
+import React
+import React_RCTAppDelegate
+import ReactAppDependencyProvider
+import react_native_splash_screen
+
+@main
+class AppDelegate: UIResponder, UIApplicationDelegate {
+  var window: UIWindow?
+  var reactNativeDelegate: ReactNativeDelegate?
+  var reactNativeFactory: RCTReactNativeFactory?
+
+  func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+  ) -> Bool {
+    let delegate = ReactNativeDelegate()
+    let factory = RCTReactNativeFactory(delegate: delegate)
+    delegate.dependencyProvider = RCTAppDependencyProvider()
+
+    reactNativeDelegate = delegate
+    reactNativeFactory = factory
+    window = UIWindow(frame: UIScreen.main.bounds)
+
+    factory.startReactNative(
+      withModuleName: "YourAppName",
+      in: window,
+      launchOptions: launchOptions
+    )
+    RNSplashScreen.show()
+    return true
+  }
+}
+
+class ReactNativeDelegate: RCTDefaultReactNativeFactoryDelegate {
+  override func sourceURL(for bridge: RCTBridge) -> URL? {
+    self.bundleURL()
+  }
+
+  override func bundleURL() -> URL? {
+#if DEBUG
+    RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: "index")
+#else
+    Bundle.main.url(forResource: "main", withExtension: "jsbundle")
+#endif
+  }
+}
+```
+
 ## API
 
 - `show()`: show splash screen (native side)
@@ -120,7 +176,7 @@ This usually means the native module did not load correctly:
 
 ## Legacy
 
-For legacy architecture projects, use `v3.x` and refer to older docs/tags.
+For legacy architecture projects, see [README-v3.md](./README-v3.md).
 
 ---
 
