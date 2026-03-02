@@ -111,7 +111,7 @@ import UIKit
 import React
 import React_RCTAppDelegate
 import ReactAppDependencyProvider
-import react_native_splash_screen
+import react_native_splash_screen // <--- 添加react_native_splash_screen
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -136,7 +136,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       in: window,
       launchOptions: launchOptions
     )
-    RNSplashScreen.show()
+    RNSplashScreen.show() // <--- 确保在 React Native 启动后调用
     return true
   }
 }
@@ -167,12 +167,6 @@ class ReactNativeDelegate: RCTDefaultReactNativeFactoryDelegate {
 
 Android 12+ 存在系统级启动阶段，这是平台行为。本库控制的是应用内可控的启动页显示/隐藏。
 
-### `Cannot read property 'hide' of null`
-
-通常是原生模块没有正确加载：
-
-- 确认 React Native 版本满足 `>= 0.84.0`
-- 重新安装依赖并重新编译 App
 
 ## Legacy 说明
 

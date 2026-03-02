@@ -111,7 +111,7 @@ import UIKit
 import React
 import React_RCTAppDelegate
 import ReactAppDependencyProvider
-import react_native_splash_screen
+import react_native_splash_screen // <--- 添加react_native_splash_screen
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -136,7 +136,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       in: window,
       launchOptions: launchOptions
     )
-    RNSplashScreen.show()
+    RNSplashScreen.show() // <--- 确保在 React Native 启动后调用
     return true
   }
 }
@@ -167,12 +167,6 @@ class ReactNativeDelegate: RCTDefaultReactNativeFactoryDelegate {
 
 Android 12+ always has a system-level splash phase. This is platform behavior. This library controls your in-app splash show/hide behavior.
 
-### `Cannot read property 'hide' of null`
-
-This usually means the native module did not load correctly:
-
-- Ensure React Native version is `>= 0.84.0`
-- Reinstall dependencies and rebuild the app
 
 ## Legacy
 
